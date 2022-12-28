@@ -30,7 +30,7 @@ function Maps(props) {
   var mapStyle = 'mapbox://styles/mapbox/'+mapname;
   const optionsGeolocation = {
     enableHighAccuracy: true,
-    timeout: 5000,
+    timeout: 6000,
     maximumAge: 0
   };
   
@@ -175,9 +175,6 @@ function Maps(props) {
 
   //Logout the user
   const handleLogout = async () => {
-    const userDetails = {
-      username: myStorage.getItem("user"),
-    };
     await axios.post(
       url + "api/users/logout"
     );
@@ -196,7 +193,8 @@ function Maps(props) {
   }
 
   function errorGeolocation(error){
-    console.log("ErrorGeolocation");
+    alert("ErrorGeolocation : "+error?.message);
+    console.log("ErrorGeolocation : ",error);
   }
 
 

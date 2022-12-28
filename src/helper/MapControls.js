@@ -26,6 +26,7 @@ function MapControls() {
     useEffect(()=>{
       if(flagForInitialLocationActivation){
         setTimeout(()=>{
+          console.log("clicked...");
           inputRef?.current?.childNodes[0]?.childNodes[0]?.childNodes[0]?.click()
         },100);
       }
