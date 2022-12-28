@@ -40,7 +40,7 @@ function LocationCard({pin, handleVolSubmit, handleSeeAllVol, handleDeleteLocati
                   </span>
                 </div>
                   <div className='cardButtonsDiv'>
-                      <form onSubmit={handleVolSubmit}>
+                      {currentUsername && <form onSubmit={handleVolSubmit}>
                         <input type="hidden" name="pin_id" value={pin._id}></input>
                         <button
                           name="volunteer"
@@ -50,7 +50,7 @@ function LocationCard({pin, handleVolSubmit, handleSeeAllVol, handleDeleteLocati
                         >
                           {allVolunteerSet.has(currentUsername+"$"+pin._id)===true?"Cancel Volunteer":"Be a Volunteer"}
                         </button>
-                      </form>
+                      </form>}
 
                       <form onSubmit={handleSeeAllVol}>
                         <button
