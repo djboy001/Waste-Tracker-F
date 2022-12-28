@@ -1,0 +1,78 @@
+.HomeClass{
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   background-repeat: no-repeat;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+  
+
+.HomeClass .title-container{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: start;
+    width: 100%;
+    transform: translateY(40%);
+} 
+
+ .HomeClass .title {
+    color: rgb(231, 231, 231);
+    padding: 0 2rem;
+    width: 70%;
+    height: auto;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+  }
+
+  .HomeClass .title .letsgoButton{
+    align-self: start;
+  }
+  
+  .HomeClass .title h1 {
+    text-transform: uppercase;
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    padding: 0;
+  }
+  
+  .HomeClass .title p {
+    text-align: justify;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    color: rgb(177, 177, 177);
+    width: 85%;
+  }
+  
+  
+   @media only screen and (max-width:900px){
+    .HomeClass .title p {
+        width: 100%;
+        font-size: 14px;
+    }
+    .HomeClass .title h1{
+        font-size: 28px;
+    }
+  }
+
+  @media only screen and (max-width: 700px){  
+   .HomeClass .title {
+      width: 100%;
+    }
+    .HomeClass .title-container{
+        transform: none;
+    }
+    .HomeClass .title {
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+    }
+    .HomeClass .title .letsgoButton{
+        align-self: center;
+      }
+    
+  }
+  

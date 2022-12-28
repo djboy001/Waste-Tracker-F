@@ -1,0 +1,195 @@
+.MapClass{
+    width: 100%;
+    height: 100%;
+}
+
+/************ Map component CSS ******************/
+/* .mapboxgl-canvas {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+  } */
+  
+  .mapboxgl-popup-content{
+    padding: 0 !important;
+    border-radius: 5px !important;
+  }
+  
+  /*Places popup close button*/
+  .mapboxgl-popup-close-button{
+    color: gray;
+    padding: 3px !important;
+  }
+  
+
+
+/******************* Map Controls ***************/
+
+
+.navigationControl{
+  all: revert;
+  position: absolute;
+  right: 33px;
+  bottom: 135px;
+}
+
+.locationToggleButton{
+    all: revert;
+    position: absolute;
+    right: 33px;
+    bottom: 90px;
+  }
+  .changeMap{
+      position: absolute;
+      right: 22px;
+      bottom: 20px;
+      z-index: 1;
+      font-size: 50px;
+      color: #fff;
+      cursor: pointer;
+      transition: 500ms;
+      margin: 0 !important;
+    }
+    .changeMap:hover{
+      color: #eaeaea;
+    }
+
+
+
+
+
+/******************** Location Card ********************/
+
+.locationCard{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: fit-content;
+    max-width: 350px;
+    border-radius: 10px !important;
+    overflow: hidden;
+    background: white;
+  }
+  
+  .cardButton{
+    border: none;
+    padding: 10px 10px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    background-color: #212429;
+    cursor: pointer;
+    font-size: 14px !important;
+  }
+  
+  .cardButton:hover{
+    background: #353b45 !important;
+  }
+  
+  .locationCard .cardButtonsDiv form {
+    /* width: 250px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: rgb(88, 87, 87);
+  }
+  
+  .locationCard{
+    /* transform: translateY(20px); */
+    z-index: 100;
+  }
+  .locationCard .cardButtonsDiv{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .locationCard .cardButtonsDiv form{
+    margin: 3px 3px;
+    flex-grow: 1;
+  }
+  
+  .locationCard .wasteImg img{
+    /* border-radius: 20px 20px 0 0; */
+    object-fit: cover;
+  }
+  
+  .locationCard .cardContent{
+    margin: 20px !important;
+  }
+  
+  .locationCard .cardContent .createdText{
+    display: flex; 
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  
+  
+  
+  /**************************** New Pin Card *********************/
+  .newPinCard{
+    /* position: absolute; */
+    z-index: 100;
+    background: white;
+    border-radius: 5px;
+  }
+  
+  .newPinCard form{
+    background: white;
+    display: flex;
+    flex-direction: column;
+    padding: 0px 40px 40px 40px;
+    border-radius: 5px;
+  }
+  
+  .newPinCard input,textarea{
+    outline: none;
+    padding: 5px;
+  }
+  
+  .newPinCard input:active,textarea:active{
+    outline: none;
+  }
+  
+  .newPinCard .heading{
+    width: 100%;
+    font-weight: bold;
+    color: #212429;
+    display: block;
+    padding: 0;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  
+  .newPinCard textarea{
+    height:10rem;
+    resize: none;
+  }
+  
+  .newPinCard input::placeholder,textarea::placeholder{
+    padding-left: 2px;
+    font-size: 10px;
+  }
+  
+  .newPinCard label{
+    margin-top: 20px;
+    margin-bottom: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    color: gray;
+  }
+  
+  /** upload file ****/
+  .newPinCard .chooseFile{
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  
+ 
+  

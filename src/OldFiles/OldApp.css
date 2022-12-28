@@ -1,0 +1,548 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 0.05em !important;
+}
+
+body {
+  background-color: #fff;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden !important;
+}
+
+#root{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+}
+
+.rootContentDiv{
+  flex: 1 1 auto;
+}
+
+/************ Map component CSS ******************/
+.mapboxgl-canvas {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  /* height: 100%; */
+  /* z-index: -3; */
+}
+
+.mapboxgl-popup-content{
+  padding: 0 !important;
+  border-radius: 5px !important;
+}
+
+/*Marker of places */
+/* .mapboxgl-marker{
+} */
+
+/*Places popup close button*/
+.mapboxgl-popup-close-button{
+  color: gray;
+  padding: 3px !important;
+}
+
+
+
+
+/*********** General CSS ************/
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: fit-content;
+  max-width: 500px;
+  padding: 20px;
+}
+
+p.card {
+  color: #000;
+}
+.card label {
+  width: max-content;
+  color: slateblue;
+  font-size: 13px;
+  border-bottom: 0.5px solid slateblue;
+  margin: 3px 0;
+}
+
+.desc {
+  font-size: 14px;
+}
+
+.star {
+  color: gold;
+}
+
+.username {
+  font-size: 14px;
+}
+
+.date {
+  font-size: 12px;
+}
+
+.card form {
+  /* width: 250px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: rgb(88, 87, 87);
+}
+
+.card input {
+  border: none;
+  border-bottom: 1px solid gray;
+}
+
+.card input::placeholder,
+.card textarea::placeholder {
+  font-size: 12px;
+  color: rgb(185, 184, 184);
+}
+
+.card input:focus,
+.card textarea:focus,
+.card select:focus {
+  outline: none;
+}
+
+.card textarea {
+  border: none;
+  border-bottom: 1px solid gray;
+}
+
+.submitButton {
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: white;
+  background-color: tomato;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.submitButton:active {
+  border: solid 1px tomato;
+  background-color: #808080;
+}
+
+.buttons {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.button {
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.button:focus {
+  outline: none;
+}
+
+.logout {
+  background-color: tomato;
+}
+
+.login {
+  background-color: teal;
+  margin-right: 10px;
+}
+
+.register {
+  background-color: slateblue;
+}
+
+
+/* @media (prefers-reduced-motion: no-preference){
+  :root {
+    overflow: hidden;
+  }
+} */
+
+
+
+
+
+
+
+
+
+
+/* setting up contact us page */
+.contactusPage iframe{
+  height: 100vh  !important;
+}
+
+.supernova{
+  background-color: unset !important;
+}
+
+
+
+
+/******************* Map Controls ***************/
+
+.changeMap{
+  position: absolute;
+  right: 0px;
+  bottom: 50px;
+  z-index: 1;
+  font-size: 50px;
+  color: #fff;
+  cursor: pointer;
+  transition: 500ms;
+}
+.changeMap:hover{
+  color: #eaeaea;
+}
+
+.locationToggleButton{
+  all: revert;
+  position: absolute;
+  right: 33px;
+  bottom: 140px;
+}
+
+.navigationControl{
+  all: revert;
+  position: absolute;
+  right: 33px;
+  bottom: 185px;
+}
+
+
+
+
+/******************** Location Card ********************/
+
+.locationCard{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: fit-content;
+  max-width: 350px;
+  border-radius: 10px !important;
+  overflow: hidden;
+  background: white;
+}
+
+.cardButton{
+  border: none;
+  padding: 10px 10px;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  background-color: #212429;
+  cursor: pointer;
+  font-size: 14px !important;
+}
+
+.cardButton:hover{
+  background: #353b45 !important;
+}
+
+.locationCard .cardButtonsDiv form {
+  /* width: 250px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: rgb(88, 87, 87);
+}
+
+.locationCard{
+  /* transform: translateY(20px); */
+  z-index: 100;
+}
+.locationCard .cardButtonsDiv{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.locationCard .cardButtonsDiv form{
+  margin: 3px 3px;
+  flex-grow: 1;
+}
+
+.locationCard .wasteImg img{
+  /* border-radius: 20px 20px 0 0; */
+  object-fit: cover;
+}
+
+.locationCard .cardContent{
+  margin: 20px !important;
+}
+
+.locationCard .cardContent .createdText{
+  display: flex; 
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+
+
+/**************************** New Pin Card *********************/
+.newPinCard{
+  /* position: absolute; */
+  z-index: 100;
+  background: white;
+  border-radius: 5px;
+}
+
+.newPinCard form{
+  background: white;
+  display: flex;
+  flex-direction: column;
+  padding: 0px 40px 40px 40px;
+  border-radius: 5px;
+}
+
+.newPinCard input,textarea{
+  outline: none;
+  padding: 5px;
+}
+
+.newPinCard input:active,textarea:active{
+  outline: none;
+}
+
+.newPinCard .heading{
+  width: 100%;
+  font-weight: bold;
+  color: #212429;
+  display: block;
+  padding: 0;
+  text-align: center;
+  margin-top: 20px;
+}
+
+
+.newPinCard textarea{
+  height:10rem;
+  resize: none;
+}
+
+.newPinCard input::placeholder,textarea::placeholder{
+  padding-left: 2px;
+  font-size: 10px;
+}
+
+.newPinCard label{
+  margin-top: 20px;
+  margin-bottom: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  color: gray;
+}
+
+/** upload file ****/
+.newPinCard .chooseFile{
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* .newPinCard .chooseFile button{
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  background: rgb(142, 141, 141);
+  color: #fff;
+  margin-right: 5px;
+}
+
+.newPinCard .chooseFile button:hover{
+  background-color: rgb(165, 164, 164);
+} */
+
+
+/**************** LOGIN and REGISTER **********************/
+
+.login1 {
+  all: revert;
+  margin: auto 10px;
+  padding: 40px 50px;
+  max-width: 300px;
+  border-radius: 5px;
+  background: #fff;
+  /* box-shadow: 1px 1px 1px #666; */
+  width: unset;
+}
+  .login1 input {
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+    margin: 10px 0;
+    padding: 14px 12px;
+    font-size: 16px;
+    border-radius: 2px; 
+    font-family: Raleway, sans-serif;
+  }
+
+.login1 input[type=text],
+.login1 input[type=email],
+.login1 input[type=password] {
+  border: 1px solid #c0c0c0;
+  transition: .2s;
+}
+
+.login1 input[type=text]:hover,
+.login1 input[type=email]:hover {
+  border-color: #F44336;
+  outline: none;
+  transition: all .2s ease-in-out;
+} 
+
+
+.login1 input[type=submit] {
+  border: none;
+  /* background: #EF5350; */
+  background: #212429;
+  color: white;
+  font-weight: bold;  
+  transition: 0.2s;
+  margin: 20px 0px;
+  border-radius: 5px;
+}
+
+.login1 input[type=submit]:hover {
+  /* background: #F44336;   */
+  background: #353b45;
+}
+
+.login1 h2 {
+  margin: 20px 0 0; 
+  color: #EF5350;
+  font-size: 28px;
+}
+
+.login1 p {
+  margin-bottom: 40px;
+}
+
+.links1 {
+  display: table;
+  width: 100%;  
+  box-sizing: border-box;
+  border-top: 1px solid #c0c0c0;
+  margin-bottom: 10px;
+}
+
+.links1 a {
+  display: table-cell;
+  padding-top: 10px;
+}
+
+.links1 a:first-child {
+  text-align: left;
+}
+
+.links1 a:last-child {
+  text-align: right;
+}
+
+  .login1 h2,
+  .login1 p,
+  .login1 a {
+    text-align: center;    
+  }
+
+.login1 a {
+  text-decoration: none;  
+  font-size: .8em;
+}
+
+.login1 a:visited {
+  color: inherit;
+}
+
+.login1 a:hover {
+  text-decoration: underline;
+}
+
+
+/* common */
+
+.loginContainer {
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+
+
+.loginCancel {
+  position: absolute;
+  top: 12px;
+  right: 22px;
+  cursor: pointer;
+}
+
+.failure {
+  all: revert;
+  display: block;
+  width: 100%;
+  font-size: 12px;
+  color: red;
+  text-align: center;
+  margin-bottom: 4px;
+  text-align: center;
+  font-weight: 500;
+}
+.success {
+  all: revert;
+  display: block;
+  width: 100%;
+  font-size: 12px;
+  color: green;
+  text-align: center;
+  margin-bottom: 4px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.logoutButton:hover{
+  background: rgb(247, 140, 121) !important;
+}
+
+.registerButton:hover{
+  color: #606369 !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

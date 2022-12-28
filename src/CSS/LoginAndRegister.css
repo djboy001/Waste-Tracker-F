@@ -1,0 +1,172 @@
+.login1 {
+    all: revert;
+    margin: auto 10px;
+    padding: 40px 50px;
+    max-width: 300px;
+    border-radius: 5px;
+    background: #fff;
+    /* box-shadow: 1px 1px 1px #666; */
+    width: unset;
+  }
+    .login1 input {
+      width: 100%;
+      display: block;
+      box-sizing: border-box;
+      margin: 10px 0;
+      padding: 14px 12px;
+      font-size: 16px;
+      border-radius: 2px; 
+      font-family: Raleway, sans-serif;
+    }
+  
+  .login1 input[type=text],
+  .login1 input[type=email],
+  .login1 input[type=password] {
+    border: 1px solid #c0c0c0;
+    transition: .2s;
+  }
+  
+  .login1 input[type=text]:hover,
+  .login1 input[type=email]:hover {
+    border-color: #F44336;
+    outline: none;
+    transition: all .2s ease-in-out;
+  } 
+  
+  
+  .login1 input[type=submit] {
+    border: none;
+    /* background: #EF5350; */
+    background: #212429;
+    color: white;
+    font-weight: bold;  
+    transition: 0.2s;
+    margin: 20px 0px;
+    border-radius: 5px;
+  }
+  
+  .login1 input[type=submit]:hover {
+    /* background: #F44336;   */
+    background: #353b45;
+  }
+  
+  .login1 h2 {
+    margin: 20px 0 0; 
+    color: #EF5350;
+    font-size: 28px;
+  }
+  
+  .login1 p {
+    margin-bottom: 40px;
+  }
+  
+  .links1 {
+    display: table;
+    width: 100%;  
+    box-sizing: border-box;
+    border-top: 1px solid #c0c0c0;
+    margin-bottom: 10px;
+  }
+  
+  .links1 a {
+    display: table-cell;
+    padding-top: 10px;
+  }
+  
+  .links1 a:first-child {
+    text-align: left;
+  }
+  
+  .links1 a:last-child {
+    text-align: right;
+  }
+  
+    .login1 h2,
+    .login1 p,
+    .login1 a {
+      text-align: center;    
+    }
+  
+  .login1 a {
+    text-decoration: none;  
+    font-size: .8em;
+  }
+  
+  .login1 a:visited {
+    color: inherit;
+  }
+  
+  .login1 a:hover {
+    text-decoration: underline;
+  }
+  
+  
+  /* common */
+  
+  .loginContainer {
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    display: flex;
+    align-items: center;
+  }
+  
+  
+  .loginCancel {
+    position: absolute;
+    top: 12px;
+    right: 22px;
+    cursor: pointer;
+  }
+  
+  .failure {
+    all: revert;
+    display: block;
+    width: 100%;
+    font-size: 12px;
+    color: red;
+    text-align: center;
+    margin-bottom: 4px;
+    text-align: center;
+    font-weight: 500;
+  }
+  .success {
+    all: revert;
+    display: block;
+    width: 100%;
+    font-size: 12px;
+    color: green;
+    text-align: center;
+    margin-bottom: 4px;
+    text-align: center;
+    font-weight: 500;
+  }
+  
+  .logoutButton:hover{
+    background: rgb(247, 140, 121) !important;
+  }
+  
+  .registerButton:hover{
+    color: #606369 !important;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

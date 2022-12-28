@@ -1,0 +1,38 @@
+
+.primaryButton{
+    all: revert;
+    font-size: 15px;
+    border: none;
+    background: #212429;
+    color: white;
+    font-weight: bold;  
+    transition: 0.2s;
+    padding: 15px 30px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  }
+  
+  .primaryButton:hover{
+    background: #353b45;
+  }
+  
+  .secondaryButton{
+    all: revert;
+    font-size: 15px;
+    border: none;
+    background: transparent;
+    color: #212429;
+    background:#fff;
+    font-weight: bold;  
+    transition: 0.2s;
+    padding: 15px 30px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  }
+  
+  .secondaryButton:hover{
+    background: #212429;
+    color: white;
+  }
