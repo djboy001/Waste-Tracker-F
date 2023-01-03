@@ -108,10 +108,6 @@
     color: rgb(88, 87, 87);
   }
   
-  .locationCard{
-    /* transform: translateY(20px); */
-    z-index: 100;
-  }
   .locationCard .cardButtonsDiv{
     display: flex;
     flex-wrap: wrap;
@@ -124,7 +120,6 @@
   }
   
   .locationCard .wasteImg img{
-    /* border-radius: 20px 20px 0 0; */
     object-fit: cover;
   }
   
@@ -138,6 +133,26 @@
     margin-bottom: 10px;
   }
   
+  @media screen and (max-width:500px) {
+    .locationCard{
+      max-width: 70vw;
+    }
+    .cardButton{
+      font-size: 12px !important;
+    }
+    .locationCard .desc{
+      font-size: 11px !important;
+    }
+    .locationCard .date{
+      font-size: 8px !important;
+    }
+    .locationCard .username{
+      font-size: 12px !important;
+    }
+    .locationCard .wasteImg img{
+      height: 165px;
+    }
+  }
   
   
   /**************************** New Pin Card *********************/
@@ -185,6 +200,11 @@
     padding-left: 2px;
     font-size: 10px;
   }
+
+  .newPinCard input,textarea{
+    padding-left: 2px;
+    font-size: 10px;
+  }
   
   .newPinCard label{
     margin-top: 20px;
@@ -202,6 +222,15 @@
     margin-top: 20px;
   }
   
+
+  @media screen and (max-width:500px) {
+    .newPinCard{
+      max-width: 70vw;
+    }
+    .newPinCard button{
+      font-size: 12px !important;
+    }
+  }
   
  
   

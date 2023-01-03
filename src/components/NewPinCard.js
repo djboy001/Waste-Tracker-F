@@ -30,7 +30,7 @@ function NewPinCard({handleSubmit, setTitle, setDesc, setNewPlace}) {
 
 
     return (
-        <div>
+        // <div className=''>
             <div className='newPinCard'>
                 <h1 className='heading'>Add Pin</h1>
                 <form onSubmit={handleAddPin}>
@@ -56,7 +56,7 @@ function NewPinCard({handleSubmit, setTitle, setDesc, setNewPlace}) {
                     />
                     <label>Description</label>
                     <textarea
-                        placeholder="Say us something about this place"
+                        placeholder="Say us something about this place (Max. 700 characters)"
                         rows="9"
                         onChange={(e) => setDesc(e.target.value)}
                     />
@@ -65,7 +65,7 @@ function NewPinCard({handleSubmit, setTitle, setDesc, setNewPlace}) {
                   </button>
                 </form>
             </div>
-        </div>
+        // </div>
     );
 }
 

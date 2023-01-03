@@ -55,10 +55,11 @@ function Maps(props) {
   const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [allVolunteerSet,setAllVolunteerSet] = useState(new Set());
+  const [isDynamicPopupPosition, setIsDynamicPopupPosition] = useState(true);
   
 
 
-/********************************* UseEffects & UseCallbacks *****************************************/  
+/********************************* UseEffects *****************************************/  
 
   // Fetching the live location of user
     useEffect(()=>{
@@ -91,6 +92,15 @@ function Maps(props) {
       getPins();
     }, [flagForDeleteLocation]);
 
+    //Disabling dynamic postion of popup for mobile devies
+    useEffect(()=>{
+      if(window.innerWidth <= 450){
+        setIsDynamicPopupPosition(false);
+      }else{
+        setIsDynamicPopupPosition(true);
+      }
+    },[window.innerWidth]);
+    
 
 
 /********************************* Functions *****************************************/  
@@ -102,6 +112,8 @@ function Maps(props) {
 
   const handleAddClick = (e) => {
     const [longitude, latitude] = e.lngLat;
+    console.log(longitude,latitude);
+    // setViewport({ ...viewport, latitude:latitude, longitude:longitude });
     setNewPlace({
       lat: latitude,
       long: longitude,
@@ -205,6 +217,7 @@ function Maps(props) {
 
 
 
+
   return (
     <div className='MapClass'>
       <ReactMapGL
@@ -247,7 +260,8 @@ function Maps(props) {
                 closeButton={true}
                 closeOnClick={false}
                 onClose={() => setCurrentPlaceId(null)}
-                anchor="left"
+                anchor="top"
+                dynamicPosition={isDynamicPopupPosition}
               >
                 <LocationCard 
                   pin={p}
@@ -283,7 +297,8 @@ function Maps(props) {
               closeButton={true}
               closeOnClick={false}
               onClose={() => setNewPlace(null)}
-              anchor="left"
+              anchor="top"
+              dynamicPosition={isDynamicPopupPosition}
             >
               <NewPinCard 
                 handleSubmit={handleSubmit}
