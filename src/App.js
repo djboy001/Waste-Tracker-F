@@ -5,11 +5,11 @@ import {
   Redirect,
 } from "react-router-dom";
 
-// Bootstrap CSS
+import { AuthProvider } from "./contexts/ContextApi";
+
+
 import "bootstrap/dist/css/bootstrap.min.css";
-// Bootstrap Bundle JS
 import "bootstrap/dist/js/bootstrap.bundle.min";
-// import SeeAllVolunteers from "./pages/SeeAllVolunteers";
 
 import "./CSS/App.css";
 import "./CSS/Home.css";
@@ -32,27 +32,30 @@ const Navbar = require("../src/components/Navbar").default;
 const Maps = require("./pages/Maps").default;
 const SeeAllVolunteers = require("./pages/SeeAllVolunteers").default;
 
+
 function App() {
 
   return (
     <Router>
-        <Navbar />
-        <div className="rootContentDiv">
-        <Switch>
-          <Route exact path="/">
-            <Redirect to="/home" />
-          </Route>
-          <Route exact path="/maps">
-            <Redirect to="/maps/streets-v12" />
-          </Route>
-          <Route path="/home" component={Home} />
-          <Route path="/maps/:mapname" component={Maps} />
-          <Route path="/seeallvolunteers/:currentPlaceId" component={SeeAllVolunteers} />
-          <Route path="/contact" component={Contact} />
-          <Route path="/about" component={About} />
-        </Switch> 
-        </div>
-        {/* <Footer /> */}
+      <AuthProvider>
+          <Navbar />
+          <div className="rootContentDiv">
+          <Switch>
+            <Route exact path="/">
+              <Redirect to="/home" />
+            </Route>
+            <Route exact path="/maps">
+              <Redirect to="/maps/streets-v12" />
+            </Route>
+            <Route path="/home" component={Home} />
+            <Route path="/maps/:mapname" component={Maps} />
+            <Route path="/seeallvolunteers/:currentPlaceId" component={SeeAllVolunteers} />
+            <Route path="/contact" component={Contact} />
+            <Route path="/about" component={About} />
+          </Switch> 
+          </div>
+          {/* <Footer /> */}
+      </AuthProvider>
     </Router>
   );
 }

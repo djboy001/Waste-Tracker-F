@@ -7,10 +7,10 @@ function Card(props) {
 
   return (
     <div className="volunteerCardClass">
-    <div class="volunteerCard">
+    <div className="volunteerCard">
       <img src={`/profile_picture${num}.jpg`} className="volunteerProfileImg" />
       <h4 className="volunteerCardName">{props.username}</h4>
-      <p class="volunteerCardEmail">{props.email}</p>
+      <p className="volunteerCardEmail">{props.email}</p>
       <a href={`mailto:${props.email}`} className="contactButtonWrapper"><button className="primaryButton">Contact</button></a>
     </div>
     </div>

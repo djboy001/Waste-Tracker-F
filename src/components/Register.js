@@ -2,12 +2,13 @@ import { Cancel, Room } from "@material-ui/icons";
 import axios from "axios";
 import { useRef, useState } from "react";
 
-export default function Register({ setShowRegister }) {
+export default function Register({ setShowRegister, makeLoading, stopLoadingSuccess, stopLoadingError }) {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const usernameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
+  const url = process.env.REACT_APP_url;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,18 +17,21 @@ export default function Register({ setShowRegister }) {
       email: emailRef.current.value,
       password: passwordRef.current.value,
     };
-    const url = process.env.REACT_APP_url;
-
+    
     try {
+      makeLoading("Registering...")
       await axios.post(
         url+"api/users/register",
         newUser
       );
       setError(false);
       setSuccess(true);
+      stopLoadingSuccess("Successfully Registered 👍");
+      setShowRegister(false);
     } catch (err) {
       setError(true);
       setSuccess(false);
+      stopLoadingError(`"Oops something went wrong"`);
     }
   };
   return (

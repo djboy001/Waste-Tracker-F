@@ -17,12 +17,14 @@ import MapboxWorker from "worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker";
 import NewPinCard from "../components/NewPinCard";
 import { deleteFile } from "../helper/uploadFilesHelper";
 import MapControls from "../helper/MapControls";
+import { useAuth } from "../contexts/ContextApi";
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 mapboxgl.workerClass = MapboxWorker;
 
 
-function Maps(props) {
-
+function Maps() {
   const myStorage = window.localStorage;
   const history = useHistory();
   var { mapname } = useParams();
@@ -33,94 +35,118 @@ function Maps(props) {
     timeout: 6000,
     maximumAge: 0
   };
-  
-
+  const toastOptions={
+    position:"top-right",
+    autoClose:5000,
+    pauseOnHover:true,
+    draggable:true,
+    theme:"light",
+    transition: Bounce
+  };
+  const errorMsg = "Oops something went wrong";
+  const successMsg = "Sucessfull";
 
 /********************************* UseStates Variables *****************************************/  
-
-  const [currentUsername, setCurrentUsername] = useState(
-    myStorage.getItem("user")
-  );
-  const [pins, setPins] = useState([]);
-  const [currentPlaceId, setCurrentPlaceId] = useState(null);
-  const [newPlace, setNewPlace] = useState(null);
-  const [title, setTitle] = useState(null);
-  const [desc, setDesc] = useState(null);
-  const [flagForDeleteLocation, setFlagForDeleteLocation] = useState(false);
-  const [viewport, setViewport] = useState({
-    latitude: 47.040182,
-    longitude: 17.071727,
-    zoom: 13.88,
-  });
-  const [showRegister, setShowRegister] = useState(false);
-  const [showLogin, setShowLogin] = useState(false);
-  const [allVolunteerSet,setAllVolunteerSet] = useState(new Set());
-  const [isDynamicPopupPosition, setIsDynamicPopupPosition] = useState(true);
+  const {
+    toastId,
+    currentUsername, setCurrentUsername, 
+    pins, setPins, 
+    currentPlaceId, setCurrentPlaceId, 
+    currentPlaceDetail, setCurrentPlaceDetail, 
+    newPlace, setNewPlace, 
+    title, setTitle, 
+    desc, setDesc, 
+    flagForDeleteLocation, setFlagForDeleteLocation, 
+    viewport, setViewport, 
+    showLogin, setShowLogin, 
+    showRegister, setShowRegister, 
+    allVolunteerSet, setAllVolunteerSet, 
+    isDynamicPopupPosition, setIsDynamicPopupPosition,
+    file, setFile
+  } = useAuth();
   
 
 
 /********************************* UseEffects *****************************************/  
+  const makeLoading = (msg="Loading...")=>{
+    toastId.current = toast.loading(msg);
+  }
+  const stopLoadingSuccess = (msg=successMsg) => {
+    toast.update(toastId.current, {render: msg, type: "success", isLoading: false, autoClose: 5000, closeButton: true});
+  }
+  const stopLoadingError = (msg=errorMsg) => {
+    toast.update(toastId.current, {render: msg, type: "error", isLoading: false, autoClose: 5000, closeButton: true});
+  }
+
+  // Fetching user
+  useEffect(()=>{
+    setCurrentUsername(myStorage.getItem("user"));
+  },[]);
 
   // Fetching the live location of user
-    useEffect(()=>{
-      if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(successGeolocation,errorGeolocation,optionsGeolocation);
-        console.log("geolocation is available...");
-      } else {
-        console.log("geolocation is unavailable...");
-        alert("Geolocation is not available");
-      }
-    },[]);
+  useEffect(()=>{
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(successGeolocation,errorGeolocation,optionsGeolocation);
+      console.log("geolocation is available...");
+    } else {
+      console.log("geolocation is unavailable...");
+    }
+  },[]);
 
-    //Fetching all location pins
-    useEffect(() => {
-      const getPins = async () => {
-        try {
-          const allPins = await axios.get(
-            url+"api/pins"
-          );
-          setPins(allPins.data);
-          const volunteers = await axios.get(url+"api/volunteer");
-          for(let i=0;i<volunteers.data.length;i++){
-            allVolunteerSet.add(volunteers.data[i].username+"$"+volunteers.data[i].pinId);
-          }
-          setAllVolunteerSet(allVolunteerSet);
-        } catch (err) {
-          console.log(err);
+  //Fetching all location pins
+  useEffect(() => {
+    const getPins = async () => {
+      try {
+        // makeLoading("Submitting location...")
+        const allPins = await axios.get(
+          url+"api/pins"
+        );
+        setPins(allPins.data);
+        const volunteers = await axios.get(url+"api/volunteer");
+        for(let i=0;i<volunteers.data.length;i++){
+          allVolunteerSet.add(volunteers.data[i].username+"$"+volunteers.data[i].pinId);
         }
-      };
-      getPins();
-    }, [flagForDeleteLocation]);
-
-    //Disabling dynamic postion of popup for mobile devies
-    useEffect(()=>{
-      if(window.innerWidth <= 450){
-        setIsDynamicPopupPosition(false);
-      }else{
-        setIsDynamicPopupPosition(true);
+        setAllVolunteerSet(allVolunteerSet);
+      } catch (err) {
+        console.log(err);
+        toast.error(`${err?.message ? err.message : errorMsg}`, toastOptions);
       }
-    },[window.innerWidth]);
-    
+    };
+    getPins();
+  }, [flagForDeleteLocation]);
+
+
+  //Disabling dynamic postion of popup for mobile devies
+  useEffect(()=>{
+    if(window.innerWidth <= 450){
+      setIsDynamicPopupPosition(false);
+    }else{
+      setIsDynamicPopupPosition(true);
+    }
+  },[window.innerWidth]);
+  
 
 
 /********************************* Functions *****************************************/  
 
-  const handleMarkerClick = async (id, lat, long) => {
-    setCurrentPlaceId(id);
-    setViewport({ ...viewport, latitude: lat, longitude: long });
+  //on clicking on marker
+  const handleMarkerClick = async (p) => {
+    setCurrentPlaceId(p._id);
+    setCurrentPlaceDetail(p);
+    setViewport({ ...viewport, latitude: p.lat, longitude: p.long });
   };
 
+  //on duble click on map
   const handleAddClick = (e) => {
     const [longitude, latitude] = e.lngLat;
-    console.log(longitude,latitude);
-    // setViewport({ ...viewport, latitude:latitude, longitude:longitude });
+    setViewport({ ...viewport, latitude: latitude, longitude: longitude });
     setNewPlace({
       lat: latitude,
       long: longitude,
     });
   };
 
-
+  //on submit new waste location form
   const handleSubmit = async (image) => {
     const newPin = {
       username: currentUsername,
@@ -131,15 +157,24 @@ function Maps(props) {
       long: newPlace.long,
     };
     try {
-      console.log("this place position is ",[newPlace.lat,newPlace.long]);
+      if(!(newPin.username && newPin.title && newPin.desc && newPin.img && newPin.lat && newPin.long)){
+        throw new Error("Please fill all the fields");
+      }
       const res = await axios.post(
         url+"api/pins",
         newPin
       );
       setPins([...pins, res.data]);
+      stopLoadingSuccess("Successfully location submitted");
     } catch (err) {
       deleteFile(image?.public_id);
-      alert(err);
+      console.log(err);
+      stopLoadingSuccess(`${err?.message ? err.message : errorMsg}`);
+    }
+    finally{
+      setDesc(null);
+      setTitle(null);
+      setFile(null);
     }
   };
 
@@ -147,23 +182,28 @@ function Maps(props) {
   const handleDeleteLocation = async(e) =>{
     e.preventDefault();
     try{
+      makeLoading("Deleting location...")
       setCurrentPlaceId(null);
+      setCurrentPlaceDetail(null);
       const pin = await axios.get(url+`api/pins/pindata/${e.target[0].value}`);
       deleteFile(pin?.data?.img?.public_id);
       await axios.delete(url+`api/pins/${e.target[0].value}`);
       await axios.delete(url+`api/volunteer/${e.target[0].value}`);
       setFlagForDeleteLocation(!flagForDeleteLocation);
+      stopLoadingSuccess("Location Deleted");
     }catch(err){
       console.log(err);
-      alert(err);
+      stopLoadingError(`${err?.message ? err.message : errorMsg}`);
     }
   }
-
+  
+  //fetching all volunteers
   const handleSeeAllVol = async (e) => {
     e.preventDefault();
-    props.history.push(`/seeallvolunteers/${currentPlaceId}`);
+    history.push(`/seeallvolunteers/${currentPlaceId}`);
   };
 
+  //on click be a volunteer
   const handleVolSubmit = async (e) => {
     e.preventDefault();
     const newVol = {
@@ -171,7 +211,8 @@ function Maps(props) {
       username: myStorage.getItem("user"),
     };
     try {
-      const res = await axios.post(
+      makeLoading();
+      await axios.post(
         url+`api/volunteer/${currentPlaceId}`,
         newVol
       );
@@ -179,23 +220,31 @@ function Maps(props) {
       else allVolunteerSet.add(currentUsername+"$"+currentPlaceId);
       setAllVolunteerSet(allVolunteerSet);
       setFlagForDeleteLocation(!flagForDeleteLocation);
+      stopLoadingSuccess("Done");
     } catch (err) {
       console.log(err);
-      alert(err);
+      stopLoadingError(`${err?.message ? err.message : errorMsg}`);
     }
   };
 
   //Logout the user
   const handleLogout = async () => {
-    await axios.post(
-      url + "api/users/logout"
-    );
-    setCurrentUsername(null);
-    myStorage.removeItem("user");
+    makeLoading("Signing out...");
+    try{
+      await axios.post(
+        url + "api/users/logout"
+      );
+      setCurrentUsername(null);
+      myStorage.removeItem("user");
+      stopLoadingSuccess("Successfully logout");
+    }catch(err){
+      stopLoadingError(`${err?.message ? err.message : errorMsg}`);
+      console.log("Logout Error : "+err);
+    }
   };
 
   //Set Live Location viewport
-  function successGeolocation(position){
+  const successGeolocation = (position) => {
     console.log("geolocation is available...",position);
     setViewport({
       ...viewport,
@@ -204,9 +253,9 @@ function Maps(props) {
     });
   }
 
-  function errorGeolocation(error){
-    alert("ErrorGeolocation : "+error?.message);
-    console.log("ErrorGeolocation : ",error);
+  const errorGeolocation = (err) => {
+    toast.error(`${(err?.message ? err.message : errorMsg)}`,toastOptions);
+    console.log("ErrorGeolocation : ",err);
   }
 
 
@@ -247,34 +296,40 @@ function Maps(props) {
                   zIndex:-100
                 }}
                 onClick={() =>{
-                  if(p._id!=currentPlaceId) handleMarkerClick(p._id, p.lat, p.long);
-                  else setCurrentPlaceId(null);
+                  if(p._id!=currentPlaceId) handleMarkerClick(p);
+                  else{ 
+                    setCurrentPlaceDetail(null); 
+                    setCurrentPlaceId(null);
+                  }
                 }}
               />
             </Marker>
-            {p._id === currentPlaceId && (
-              <Popup
-                key={p._id}
-                latitude={p.lat}
-                longitude={p.long}
-                closeButton={true}
-                closeOnClick={false}
-                onClose={() => setCurrentPlaceId(null)}
-                anchor="top"
-                dynamicPosition={isDynamicPopupPosition}
-              >
-                <LocationCard 
-                  pin={p}
-                  handleVolSubmit={handleVolSubmit}
-                  handleSeeAllVol={handleSeeAllVol}
-                  currentUsername={currentUsername}
-                  handleDeleteLocation={handleDeleteLocation}
-                  allVolunteerSet={allVolunteerSet}
-                />
-              </Popup>
-            )}
           </div>
         ))}
+        {currentPlaceDetail && (
+          <Popup
+            key={currentPlaceDetail._id}
+            latitude={currentPlaceDetail.lat}
+            longitude={currentPlaceDetail.long}
+            closeButton={true}
+            closeOnClick={false}
+            onClose={() => {
+              setCurrentPlaceId(null);
+              setCurrentPlaceDetail(null);
+            }}
+            anchor="top"
+            dynamicPosition={isDynamicPopupPosition}
+          >
+            <LocationCard 
+              pin={currentPlaceDetail}
+              handleVolSubmit={handleVolSubmit}
+              handleSeeAllVol={handleSeeAllVol}
+              currentUsername={currentUsername}
+              handleDeleteLocation={handleDeleteLocation}
+              allVolunteerSet={allVolunteerSet}
+            />
+          </Popup>
+        )}
         {newPlace && (
           <>
             <Marker
@@ -296,15 +351,16 @@ function Maps(props) {
               longitude={newPlace.long}
               closeButton={true}
               closeOnClick={false}
-              onClose={() => setNewPlace(null)}
+              onClose={() =>{ 
+                setNewPlace(null);
+                setFile(null);
+              }}
               anchor="top"
               dynamicPosition={isDynamicPopupPosition}
             >
               <NewPinCard 
                 handleSubmit={handleSubmit}
-                setDesc={setDesc}
-                setTitle={setTitle}
-                setNewPlace={setNewPlace}
+                makeLoading={makeLoading}
               />
             </Popup>
           </>
@@ -333,16 +389,33 @@ function Maps(props) {
             </button>
           </div>
         )}
-        {showRegister && <Register setShowRegister={setShowRegister} />}
-        {showLogin && (
-          <Login
-            setShowLogin={setShowLogin}
-            setCurrentUsername={setCurrentUsername}
-            myStorage={myStorage}
-          />
-        )}
         <MapControls />
       </ReactMapGL>
+        {showRegister && 
+          <div className="my-overlay">
+            <Register 
+              setShowRegister={setShowRegister} 
+              makeLoading={makeLoading}
+              stopLoadingSuccess={stopLoadingSuccess}
+              stopLoadingError={stopLoadingError}
+            />
+          </div> 
+        }
+        {showLogin && (
+          <div className="my-overlay">
+            <Login
+              setShowLogin={setShowLogin}
+              setCurrentUsername={setCurrentUsername}
+              myStorage={myStorage}
+              makeLoading={makeLoading}
+              stopLoadingSuccess={stopLoadingSuccess}
+              stopLoadingError={stopLoadingError}
+            />
+          </div>
+        )}
+      <ToastContainer 
+        newestOnTop={true}  
+      />
     </div>
   );
 }
