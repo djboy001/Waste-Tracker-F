@@ -4,7 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const url = process.env.REACT_APP_url;
 
-export async function uploadFile(file){
+export async function uploadFile({file, stopLoadingError}){
     try{
         const formData = new FormData();
         formData.append("file",file);
@@ -19,18 +19,11 @@ export async function uploadFile(file){
         };
     }catch(err){
         console.log(err);
-        toast.error(`${err?.message ? err.message : "Oops something went wrong"}`, {
-            position:"top-right",
-            autoClose:5000,
-            pauseOnHover:true,
-            draggable:true,
-            theme:"light",
-            transition: Bounce
-        });
+        stopLoadingError(`${err?.message ? err.message : "Oops something went wrong"}`);
     }
 }
 
-export async function deleteFile(public_id){
+export async function deleteFile({public_id, stopLoadingError}){
     try{
         if(!public_id) throw new Error("No public Id to delete Image");
         axios.post(`${url}deleteImage`,{publicId:public_id}).then((res)=>{
@@ -38,13 +31,6 @@ export async function deleteFile(public_id){
         })
     }catch(err){
         console.log(err);
-        toast.error(`${err?.message ? err.message : "Oops something went wrong"}`, {
-            position:"top-right",
-            autoClose:5000,
-            pauseOnHover:true,
-            draggable:true,
-            theme:"light",
-            transition: Bounce
-        });
+        stopLoadingError(`${err?.message ? err.message : "Oops something went wrong"}`);
     }
 }

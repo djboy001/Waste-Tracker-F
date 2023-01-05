@@ -4,7 +4,7 @@ import { deleteFile, uploadFile } from '../helper/uploadFilesHelper';
 import { toast, Bounce } from 'react-toastify';
 
 
-function NewPinCard({handleSubmit, makeLoading}) {
+function NewPinCard({handleSubmit, makeLoading, stopLoadingError}) {
     const pinSample = {
         _id:1,
         username: "currentUsername",
@@ -29,7 +29,7 @@ function NewPinCard({handleSubmit, makeLoading}) {
         makeLoading("Adding Location...");
         e.preventDefault();
         setNewPlace(null);
-        const res = await uploadFile(file);
+        const res = await uploadFile({file, stopLoadingError});
         if(res && res.url && res.public_id) handleSubmit(res);
     }
 

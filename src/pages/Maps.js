@@ -172,7 +172,7 @@ function Maps() {
       setPins([...pins, res.data]);
       stopLoadingSuccess("Successfully location submitted");
     } catch (err) {
-      deleteFile(image?.public_id);
+      deleteFile({public_id:image?.public_id, stopLoadingError});
       console.log(err);
       stopLoadingError(`${err?.response?.data ? err?.response?.data : errorMsg}`);
     }
@@ -191,7 +191,7 @@ function Maps() {
       setCurrentPlaceId(null);
       setCurrentPlaceDetail(null);
       const pin = await axios.get(url+`api/pins/pindata/${e.target[0].value}`);
-      deleteFile(pin?.data?.img?.public_id);
+      deleteFile({public_id:pin?.data?.img?.public_id, stopLoadingError});
       await axios.delete(url+`api/pins/${e.target[0].value}`);
       await axios.delete(url+`api/volunteer/${e.target[0].value}`);
       setFlagForDeleteLocation(!flagForDeleteLocation);
@@ -366,6 +366,8 @@ function Maps() {
               <NewPinCard 
                 handleSubmit={handleSubmit}
                 makeLoading={makeLoading}
+                stopLoadingError={stopLoadingError}
+                stopLoadingSuccess={stopLoadingSuccess}
               />
             </Popup>
           </>
