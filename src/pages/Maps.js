@@ -174,7 +174,7 @@ function Maps() {
     } catch (err) {
       deleteFile(image?.public_id);
       console.log(err);
-      stopLoadingSuccess(`${err?.response?.data ? err?.response?.data : errorMsg}`);
+      stopLoadingError(`${err?.response?.data ? err?.response?.data : errorMsg}`);
     }
     finally{
       setDesc(null);
