@@ -73,9 +73,15 @@ function Maps() {
   }
   const stopLoadingSuccess = (msg=successMsg) => {
     toast.update(toastId.current, {render: msg, type: "success", isLoading: false, autoClose: 5000, closeButton: true});
+    setTimeout(()=>{
+      toast.dismiss();
+    },5000);
   }
   const stopLoadingError = (msg=errorMsg) => {
     toast.update(toastId.current, {render: msg, type: "error", isLoading: false, autoClose: 5000, closeButton: true});
+    setTimeout(()=>{
+      toast.dismiss();
+    },5000);
   }
 
   // Fetching user
@@ -97,7 +103,6 @@ function Maps() {
   useEffect(() => {
     const getPins = async () => {
       try {
-        // makeLoading("Submitting location...")
         const allPins = await axios.get(
           url+"api/pins"
         );
@@ -109,7 +114,7 @@ function Maps() {
         setAllVolunteerSet(allVolunteerSet);
       } catch (err) {
         console.log(err);
-        toast.error(`${err?.message ? err.message : errorMsg}`, toastOptions);
+        toast.error(`${err?.response?.data ? err?.response?.data : errorMsg}`, toastOptions);
       }
     };
     getPins();
@@ -139,7 +144,7 @@ function Maps() {
   //on duble click on map
   const handleAddClick = (e) => {
     const [longitude, latitude] = e.lngLat;
-    setViewport({ ...viewport, latitude: latitude, longitude: longitude });
+    // setViewport({ ...viewport, latitude: latitude, longitude: longitude });
     setNewPlace({
       lat: latitude,
       long: longitude,
@@ -169,7 +174,7 @@ function Maps() {
     } catch (err) {
       deleteFile(image?.public_id);
       console.log(err);
-      stopLoadingSuccess(`${err?.message ? err.message : errorMsg}`);
+      stopLoadingSuccess(`${err?.response?.data ? err?.response?.data : errorMsg}`);
     }
     finally{
       setDesc(null);
@@ -193,7 +198,7 @@ function Maps() {
       stopLoadingSuccess("Location Deleted");
     }catch(err){
       console.log(err);
-      stopLoadingError(`${err?.message ? err.message : errorMsg}`);
+      stopLoadingError(`${err?.response?.data ? err?.response?.data : errorMsg}`);
     }
   }
   
@@ -223,7 +228,7 @@ function Maps() {
       stopLoadingSuccess("Done");
     } catch (err) {
       console.log(err);
-      stopLoadingError(`${err?.message ? err.message : errorMsg}`);
+      stopLoadingError(`${err?.response?.data ? err?.response?.data : errorMsg}`);
     }
   };
 
@@ -238,7 +243,7 @@ function Maps() {
       myStorage.removeItem("user");
       stopLoadingSuccess("Successfully logout");
     }catch(err){
-      stopLoadingError(`${err?.message ? err.message : errorMsg}`);
+      stopLoadingError(`${err?.response?.data ? err?.response?.data : errorMsg}`);
       console.log("Logout Error : "+err);
     }
   };
@@ -254,7 +259,7 @@ function Maps() {
   }
 
   const errorGeolocation = (err) => {
-    toast.error(`${(err?.message ? err.message : errorMsg)}`,toastOptions);
+    toast.error(`${(err?.response?.data ? err?.response?.data : errorMsg)}`,toastOptions);
     console.log("ErrorGeolocation : ",err);
   }
 

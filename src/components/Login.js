@@ -1,8 +1,7 @@
 import { Cancel, Room } from "@material-ui/icons";
 import axios from "axios";
 import { useRef, useState } from "react";
-import { ToastContainer, toast, Bounce } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast} from 'react-toastify';
 
 export default function Login({ setShowLogin, setCurrentUsername, myStorage, makeLoading, stopLoadingSuccess, stopLoadingError }) {
   const [error, setError] = useState(false);
@@ -11,12 +10,13 @@ export default function Login({ setShowLogin, setCurrentUsername, myStorage, mak
   const url = process.env.REACT_APP_url;
   const handleSubmit = async (e) => {
     e.preventDefault();
-    makeLoading("Signing In...");
-    const user = {
-      username: usernameRef.current.value,
-      password: passwordRef.current.value,
-    };
     try {
+      makeLoading("Signing In...");
+      if(!(usernameRef?.current?.value && passwordRef?.current?.value)) throw new Error("Please fill all the fields");
+      const user = {
+        username: usernameRef.current.value,
+        password: passwordRef.current.value,
+      };
       const res = await axios.post(
         url+"api/users/login",
         user
@@ -26,9 +26,8 @@ export default function Login({ setShowLogin, setCurrentUsername, myStorage, mak
       setShowLogin(false);
       stopLoadingSuccess(`Hey, ${res?.data?.username} 😊`);
     } catch (err) {
-      setError(true);
-      console.log(err);
-      stopLoadingError("Oops something went wrong");
+      console.log(err?.response?.data);
+      stopLoadingError(`${err?.response?.data ? err?.response?.data : "Oops something went wrong"}`);
     }
   };
 

@@ -1,6 +1,7 @@
 import { Cancel, Room } from "@material-ui/icons";
 import axios from "axios";
 import { useRef, useState } from "react";
+import { toast } from 'react-toastify';
 
 export default function Register({ setShowRegister, makeLoading, stopLoadingSuccess, stopLoadingError }) {
   const [success, setSuccess] = useState(false);
@@ -12,26 +13,22 @@ export default function Register({ setShowRegister, makeLoading, stopLoadingSucc
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newUser = {
-      username: usernameRef.current.value,
-      email: emailRef.current.value,
-      password: passwordRef.current.value,
-    };
-    
     try {
       makeLoading("Registering...")
+      if(!(usernameRef?.current?.value && passwordRef?.current?.value && emailRef?.current?.value)) throw new Error("Please fill all the fields");
+      const newUser = {
+        username: usernameRef.current.value,
+        email: emailRef.current.value,
+        password: passwordRef.current.value,
+      };
       await axios.post(
         url+"api/users/register",
         newUser
       );
-      setError(false);
-      setSuccess(true);
-      stopLoadingSuccess("Successfully Registered 👍");
       setShowRegister(false);
+      stopLoadingSuccess("Successfully Registered 👍");
     } catch (err) {
-      setError(true);
-      setSuccess(false);
-      stopLoadingError(`"Oops something went wrong"`);
+      stopLoadingError(`${err?.response?.data ? err?.response?.data : "Oops something went wrong"}`);
     }
   };
   return (

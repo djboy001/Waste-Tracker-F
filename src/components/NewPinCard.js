@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import { useAuth } from '../contexts/ContextApi';
 import { deleteFile, uploadFile } from '../helper/uploadFilesHelper';
 import { toast, Bounce } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 
 function NewPinCard({handleSubmit, makeLoading}) {
