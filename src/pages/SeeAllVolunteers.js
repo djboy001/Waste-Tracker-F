@@ -60,7 +60,6 @@ class SeeAllVolunteers extends React.Component {
 
   renderPerson = () => {
     const { flag, allVolunteers, error } = this.state;
-    console.log("Flag : ", flag);
 
     if (flag) {
       return (
