@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { useAuth } from '../contexts/ContextApi';
+import { useAuth } from '../context/ContextApi';
 import { deleteFile, uploadFile } from '../helper/uploadFilesHelper';
 import { toast, Bounce } from 'react-toastify';
 

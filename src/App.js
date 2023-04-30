@@ -1,16 +1,5 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from "react-router-dom";
-
-import { AuthProvider } from "./contexts/ContextApi";
-
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-
 import "./CSS/App.css";
 import "./CSS/Home.css";
 import "./CSS/About.css";
@@ -22,15 +11,21 @@ import "./CSS/Footer.css"
 import "./CSS/LoginAndRegister.css"
 import "./CSS/ContactUs.css"
 
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
+import { AuthProvider } from "./context/ContextApi";
 
-const Contact = require("./pages/Contact").default;
-const Footer = require("../src/components/Footer").default;
-// const Header = require("../src/components/Header").default;
-const Home = require("./pages/Home").default;
-const About = require("./pages/About").default;
-const Navbar = require("../src/components/Navbar").default;
-const Maps = require("./pages/Maps").default;
-const SeeAllVolunteers = require("./pages/SeeAllVolunteers").default;
+import Contact from "./pages/Contact";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Navbar from "../src/components/Navbar";
+import Maps from "./pages/Maps";
+import SeeAllVolunteers from "./pages/SeeAllVolunteers";
+
 
 
 function App() {
@@ -54,7 +49,6 @@ function App() {
             <Route path="/about" component={About} />
           </Switch> 
           </div>
-          {/* <Footer /> */}
       </AuthProvider>
     </Router>
   );

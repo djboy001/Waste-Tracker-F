@@ -16,8 +16,8 @@ import MapboxWorker from "worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker";
 // eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
 import NewPinCard from "../components/NewPinCard";
 import { deleteFile } from "../helper/uploadFilesHelper";
-import MapControls from "../helper/MapControls";
-import { useAuth } from "../contexts/ContextApi";
+import MapControls from "../components/MapControls";
+import { useAuth } from "../context/ContextApi";
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -144,7 +144,6 @@ function Maps() {
   //on duble click on map
   const handleAddClick = (e) => {
     const [longitude, latitude] = e.lngLat;
-    // setViewport({ ...viewport, latitude: latitude, longitude: longitude });
     setNewPlace({
       lat: latitude,
       long: longitude,
@@ -248,6 +247,7 @@ function Maps() {
     }
   };
 
+
   //Set Live Location viewport
   const successGeolocation = (position) => {
     console.log("geolocation is available...",position);
@@ -301,7 +301,7 @@ function Maps() {
                   zIndex:-100
                 }}
                 onClick={() =>{
-                  if(p._id!=currentPlaceId) handleMarkerClick(p);
+                  if(p._id!==currentPlaceId) handleMarkerClick(p);
                   else{ 
                     setCurrentPlaceDetail(null); 
                     setCurrentPlaceId(null);
