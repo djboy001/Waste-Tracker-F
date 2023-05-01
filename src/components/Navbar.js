@@ -1,5 +1,4 @@
 import React from "react";
-import { Redirect, NavLink } from "react-router-dom"
 
 export default function Navbar() {
   return (

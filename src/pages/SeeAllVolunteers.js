@@ -1,36 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Card from "../components/Card";
+import { useFetchVolunteers } from "../hooks/hooks"
 
-const SeeAllVolunteers = (props) => {
+const SeeAllVolunteers = () => {
   const [flag, setFlag] = useState(true);
   const [allVolunteers, setAllVolunteers] = useState([]);
   const [error, setError] = useState("There are no volunteers at this location");
 
-  useEffect(() => {
-    var controller = new AbortController();
-    const {signal} = controller;
-    async function fetchData() {
-      try {
-        const url = process.env.REACT_APP_url;
-        const response = await fetch(`${url}api/volunteer/${props.match.params.currentPlaceId}`,{signal});
-        const data = await response.json();
-        controller = null;
-        if (data && data.length === 0) {
-          setFlag(false);
-          setAllVolunteers(data);
-        } else {
-          setFlag(true);
-          setAllVolunteers(data);
-        }
-      } catch (error) {
-        setFlag(false);
-        setError("There are no volunteers at this location");
-      }
-    }
-    fetchData();
-    return () => controller?.abort();
-  }, [props.match.params.currentPlaceId]);
-
+  useFetchVolunteers({ setError, setFlag, setAllVolunteers });
+  
   const renderCard = () => {
     return (
       flag ? 

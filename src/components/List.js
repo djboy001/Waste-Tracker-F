@@ -1,15 +1,14 @@
 import React from "react";
-import { useState } from "react";
 import Card from "./Card";
 import Footer from "./Footer";
-import Header from "./Header";
+import Navbar from "./Navbar";
 
 export default function List(props) {
   const Volunteers = props.volunteers;
 
   return (
     <div>
-      <Header />
+      <Navbar />
       {Volunteers.map((item) => (
         <Card name={item.username} email={item.email} />
       ))}

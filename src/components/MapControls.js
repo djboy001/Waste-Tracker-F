@@ -18,10 +18,10 @@ function MapControls() {
     const inputRef = useRef();
     const history = useHistory();
 
-
     if (!flagForInitialLocationActivation && inputRef?.current?.childNodes[0]?.childNodes[0]?.childNodes[0]) {
         setFlagForInitialLocationActivation(true);
     }
+    
     useEffect(() => {
         var timerId = null;
         if (flagForInitialLocationActivation) {

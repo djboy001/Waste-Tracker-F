@@ -1,11 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
-
-
 
 function ContactUsCard() {
     const history = useHistory();
-    function handleOnContact(){
+    function handleOnContact() {
         console.log("Form Submitted...");
         history.push("/");
     }
@@ -27,9 +25,9 @@ function ContactUsCard() {
                     placeholder="Your Message"
                     rows="9"
                 />
-              <button type="submit" className="primaryButton" style={{marginTop:"20px",}} onClick={handleOnContact}   >
-                Submit
-              </button>
+                <button type="submit" className="primaryButton" style={{ marginTop: "20px", }} onClick={handleOnContact}   >
+                    Submit
+                </button>
             </form>
         </div>
     );

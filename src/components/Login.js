@@ -1,51 +1,28 @@
-import { Cancel, Room } from "@material-ui/icons";
-import axios from "axios";
-import { useRef, useState } from "react";
-import { toast} from 'react-toastify';
+import { Cancel } from "@material-ui/icons";
+import { useRef } from "react";
+import UserApi from "../services/userApi";
+import { useAuth } from "../context/ContextApi";
 
-export default function Login({ setShowLogin, setCurrentUsername, myStorage, makeLoading, stopLoadingSuccess, stopLoadingError }) {
-  const [error, setError] = useState(false);
+export default function Login() {
   const usernameRef = useRef();
   const passwordRef = useRef();
-  const url = process.env.REACT_APP_url;
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      makeLoading("Signing In...");
-      if(!(usernameRef?.current?.value && passwordRef?.current?.value)) throw new Error("Please fill all the fields");
-      const user = {
-        username: usernameRef.current.value,
-        password: passwordRef.current.value,
-      };
-      const res = await axios.post(
-        url+"api/users/login",
-        user
-      );
-      setCurrentUsername(res?.data?.username);
-      myStorage.setItem("user", res?.data?.username);
-      setShowLogin(false);
-      stopLoadingSuccess(`Hey, ${res?.data?.username} 😊`);
-    } catch (err) {
-      console.log(err?.response?.data);
-      stopLoadingError(`${err?.response?.data ? err?.response?.data : "Oops something went wrong"}`);
-    }
-  };
+  const { setShowLogin } = useAuth();
+  const { handleLogin } = UserApi();
 
   return (
     <div className="loginContainer">
-        <form className="login1" onSubmit={handleSubmit}>
-          <h2 style={{color:"#212429"}}>Welcome, User!</h2>
-          <p>Please Log In</p>
-          <input autoFocus type="text" placeholder="User Name" ref={usernameRef} />
-          <input type="password" min="6" placeholder="Password" ref={passwordRef} />
-          <input type="submit" value="Log In" />
-          {error && <span className="failure">Something went wrong!</span>}
-          <div className="links1">
-            <a href="#"></a>
-            <p href="#">Don't have account? Then click on Register</p>
-          </div>
-        </form>
-        <Cancel className="loginCancel" onClick={() => setShowLogin(false)} />
-    </div> 
+      <form className="login1" onSubmit={(e) => handleLogin(e, { usernameRef, passwordRef })}>
+        <h2 style={{ color: "#212429" }}>Welcome, User!</h2>
+        <p>Please Log In</p>
+        <input autoFocus type="text" placeholder="User Name" ref={usernameRef} />
+        <input type="password" min="6" placeholder="Password" ref={passwordRef} />
+        <input type="submit" value="Log In" />
+        <div className="links1">
+          <a href="#"></a>
+          <p href="#">Don't have account? Then click on Register</p>
+        </div>
+      </form>
+      <Cancel className="loginCancel" onClick={() => setShowLogin(false)} />
+    </div>
   );
 }
