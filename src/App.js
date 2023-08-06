@@ -10,11 +10,15 @@ import Navbar from "../src/components/Navbar";
 import Maps from "./pages/Maps";
 import SeeAllVolunteers from "./pages/SeeAllVolunteers";
 
+import Cookies from 'js-cookie';
+import axios from "axios";
 
 
 function App() {
   const { setCurrentUsername } = useAuth();
   useEffect(() => {
+    console.log("request made to "+process.env.REACT_APP_url+"api/users/verify_jwt");
+    axios.get(process.env.REACT_APP_url+"api/auth/verify_jwt",{ withCredentials: true,headers: { 'Content-Type': 'application/json' } });
     console.log("user: ",myStorage.getItem("user"));
     setCurrentUsername(myStorage.getItem("user"));
   }, []);
