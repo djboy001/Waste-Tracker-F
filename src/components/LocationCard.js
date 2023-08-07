@@ -25,7 +25,7 @@ function LocationCard() {
     lat: 45,
     long: 44,
     img: {
-      url: "./garbage.jpg",
+      url: "/garbage.jpg",
       public_id: "abcd..."
     }
   };

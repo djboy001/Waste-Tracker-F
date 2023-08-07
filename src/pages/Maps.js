@@ -55,7 +55,7 @@ function Maps() {
     <div className='MapClass'>
       <ReactMapGL
         {...viewport}
-        mapboxApiAccessToken="pk.eyJ1IjoiYW1pdGJhdHJhMzEiLCJhIjoiY2t2MmQzbnh0MDI5dzJ5bDdvbDExand4MiJ9.vJaVz5di-IFq3uJd_eCC2Q"
+        mapboxApiAccessToken={process.env.REACT_APP_mapboxApiAccessToken}
         width="100%"
         height="100%"
         transitionDuration="20"

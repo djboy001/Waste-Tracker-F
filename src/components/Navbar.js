@@ -6,7 +6,7 @@ export default function Navbar() {
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark row" id="navbar">
         <div className="container-fluid">
           <a className="navbar-brand col-sm ms-3" href="/">
-            <img height="45px" src={"./logo192.png"} /> Waste Tracker
+            <img height="45px" src={"/logo192.png"} /> Waste Tracker
           </a>
           <button
             className="navbar-toggler"
