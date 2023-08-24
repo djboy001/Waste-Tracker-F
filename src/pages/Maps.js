@@ -12,7 +12,7 @@ import { Register, Login, NewPinCard, LocationCard, MapControls } from "../compo
 import { UserApi } from "../services/services";
 import { MarkerHandlers } from "../helper/helper"
 import { useFetchLiveLocation, useFetchPins } from "../hooks/hooks";
-
+import {ownPinColor, othersPinColor, logoutButtonColor} from "../constants"
 
 function Maps() {
   var { mapname } = useParams();
@@ -75,7 +75,7 @@ function Maps() {
                 style={{
                   fontSize: 3 * viewport.zoom,
                   color:
-                    currentUsername === p.username ? "tomato" : "slateblue",
+                    currentUsername === p.username ? ownPinColor : othersPinColor,
                   cursor: "pointer",
                   zIndex: -100
                 }}
@@ -118,7 +118,7 @@ function Maps() {
               <Room
                 style={{
                   fontSize: 3 * viewport.zoom,
-                  color: "tomato",
+                  color: ownPinColor,
                   cursor: "pointer",
                 }}
               />
@@ -142,7 +142,7 @@ function Maps() {
         {currentUsername ? (
           <div className="buttons" id="buttonDiv">
             <button
-              style={{ background: "tomato" }}
+              style={{ background: logoutButtonColor }}
               className="primaryButton"
               onClick={handleLogout}>
               Log Out

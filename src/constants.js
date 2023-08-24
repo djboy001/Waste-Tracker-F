@@ -17,3 +17,7 @@ export const errorMsg = "Oops something went wrong";
 export const successMsg = "Sucessfull";
 export const url = process.env.REACT_APP_url;
 export const myStorage = window.localStorage;
+
+export const ownPinColor = "#7091F5";  //tomato
+export const othersPinColor = "#5C8374";  //slateblue
+export const logoutButtonColor = "#5C8374"
